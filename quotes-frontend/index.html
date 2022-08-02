@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Quotes of the day</h1>
+    <h6 id="quote"></h6>
+    <p id="author"></p>
+
+    <script>
+
+        const heading = document.querySelector('#quote');
+        const author = document.querySelector('#author');
+
+        const fetchData = async () => {
+            try{
+                const res = await fetch(`http://localhost:4000/quotes`);
+                const data = await res.json();
+                console.log(data)
+                if(data.author === "Unknown"){
+                    throw Error('Author is not defined')
+                }
+                heading.innerText = data.quote
+                author.innerText = data.author;
+            }catch(err) {
+                console.log(err)
+            }
+        }
+
+        fetchData()
+
+    //   fetch("http://localhost:4000/quotes").then((res) => {
+    //       res.json().then((data) => {
+    //           heading.innerText = data.quote
+    //           author.innerText = data.author;
+    //       }).catch((err) => {
+    //           console.log(err)
+    //       });
+    //   }).catch((err) => {
+    //       console.log(err);
+    //   });
+    </script>
+  </body>
+</html>
